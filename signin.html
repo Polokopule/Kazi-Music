@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="theme-color" content="#3C8CE7">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Firebase JavaScript SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.1.2/firebase-app.js" type="module"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.1.2/firebase-database.js" type="module"></script>
+    <!-- Add other Firebase modules if needed -->
+
+    <!-- Include jQuery library -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+ <script src="showpass.js" defer></script>
+    <title>Signin | Kazi app</title>
+    
+    <style>
+        /* Your CSS styles */
+        /* (Your existing CSS styles here) */
+        
+         .d{
+        
+            color:#3C8CE7;
+            font-size:25px;
+        }
+         .menuList{
+            position: fixed;
+            z-index:1;
+            width:100%;
+            height:100%;
+            display: none;
+            overflow: hidden;
+            left:0;
+            right:0;
+            color:#000;
+            flex-direction: column;
+            padding:9px;
+           background-color: rgba(255, 255, 255, 0.9);
+           gap:5px;
+            
+        }
+        .dash{
+            animation: 1s slide ;
+        }
+        @keyframes slide {
+            0%{
+                width:0%;
+                height:0%;
+            }
+        }
+        input:checked ~ .menuList{
+            display: flex;
+            
+           
+        }
+        .menuList > label {
+            padding:10px;
+            border-bottom:1px solid #000;
+            color: #000;
+            
+            width:270px;
+        }
+        input[type="checkbox"] {
+            display: none;
+               }
+               
+               .menuList > .h1{
+                  width:200px;
+                  margin-left:20%;
+                  text-align: center;
+               }
+            .menuList >   .close {
+                   position: absolute;
+                   top:10px;
+                   right:20px;
+                   font-size: 40px;
+                   font-weight:400;
+                   border: none;
+                   width: 20px;
+               }
+              .white{
+                   background:#fff;
+                  
+               }
+               
+               .form{
+                   display:flex;
+                   flex-direction: column;
+                   justify-content: center;
+                   gap:6px;
+                   background: #f4f4f4;
+                   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+                   position: relative;
+                   overflow: hidden;
+                   left:6%;
+                   padding:10px;
+                   width: 80%;
+                   border: 1px solid #3C8CE7 ;
+                   border-radius: 7px;
+               }
+               .form:before{
+                   position: absolute;
+                   content:'';
+                   width: 200px;
+                   height: 200px;
+                   background:#3C8CE7;
+                   right:-70px;
+                   top: -70px;
+                   border-radius: 100%;
+                   filter:blur(8px);
+                   opacity: 0.4;
+                   
+               }
+               
+                 .form:after{
+                   position: absolute;
+                   content:'';
+                   width: 200px;
+                   height: 200px;
+                   background:#3C8CE7;
+                   left:-50px;
+                   bottom: -50px;
+                   border-radius: 100%;
+                   filter:blur(8px);
+                   opacity: 0.4;
+               }
+               .form > label{
+                display:flex;
+                   flex-direction: column;
+                   gap:6px;
+                   padding:6px;
+                   z-index:1;
+                   
+               }
+               .form > label > input{
+                   padding: 10px;
+                   border: none;
+                   background : #fff;
+                   width: 90%;
+                   border-radius: 10px;
+               }
+               
+                .form > label > .eye > input{
+                   padding: 10px;
+                   border: none;
+                   background : #fff;
+                   width: 90%;
+                   border-radius: 10px;
+               }
+               .eye{
+                   display: flex;
+                   gap:5px;
+               }
+               #bnt{
+                   padding: 10px;
+                   border: none;
+                   background : #fff;
+                  
+                   border-radius: 10px;
+               }
+               .bt{
+                   border: none;
+                  padding: 10px;
+                  background: #3C8CE7;
+                 color:#fff;
+                 border-radius: 10px;
+                 
+               }
+               .bt:last-child{
+                   background:#3C8CE7;
+                  text-align: center;
+               }
+            form >   .form > span{
+                   display:flex;
+                   padding:8px;
+                   font-size: 15px;
+                 
+               }
+               .form > span > label > a {
+             color:#3C8CE7;
+             }
+             input{
+               outline: none;
+             }
+                    .h1 > span{
+           font-size: 51px;  
+           color: red;
+         }
+         .h1{
+             position: relative;
+             
+          top:-20px;
+         }
+         .h1:before{
+             content:'Explore kazi musics | sotho hop';
+             position: absolute;
+             bottom:0;
+             left:20%;
+             font-size:8px;
+             width:200px;
+             font-weight: 300;
+             text-align: center;
+         }
+         a{
+             text-decoration: none;
+             color:#000;
+         }
+         h1{
+             text-align: center;
+         }
+    </style>
+
+</head>
+<body>
+
+<div class="menu">
+    <input type="checkbox" name='menu' id="acc" checked>
+    <div class="menuList white">
+        <!-- Your form -->
+        <form id="loginForm">
+            <h1 class="h1">KAZI<span>.</span></h1>
+            <div class="form">
+                <b class='d'>Signin </b>
+                <label>
+                    Phone Number
+                    <input type="text" id='phone' placeholder="Phone Number"/>
+                </label>
+                <label>
+                    Password
+                    <div class="eye">
+                        <input type="password" id="pass" placeholder="Password"/>
+                        <button id="bnt" type="button" onclick="Showpass()">Show</button>
+                    </div>
+                </label>
+                <input type="submit" value="Login" class="bt"/>
+                <span> Need Account?<label><a href="signup.html">Create Account</a></label></span>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="login.js">
+   </script>
+
+</body>
+</html>

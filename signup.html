@@ -1,0 +1,378 @@
+<!-- Include Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js" type="module"></script>
+
+<!-- Include jQuery library -->
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="CreateAcc.js" defer></script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="theme-color" content="#3C8CE7">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+       <script src="showpass.js" defer></script>
+       <script  defer>
+           function Creating(){
+    var alert = document.getElementById("alert");
+    alert.style.display='flex';
+    
+}
+function CloseSpinner(){
+       var alert = document.getElementById("alert");
+    alert.style.display='none';
+}
+function CreateAcc(){
+    
+    
+    Creating();
+   
+    
+    setTimeout(CloseSpinner,2000);
+    
+}
+
+       </script>
+    <title>Sign up | kazi app</title>
+    <style>
+         .menuList{
+            position: fixed;
+            z-index:1;
+            width:100%;
+            height:100%;
+            display: none;
+            overflow: hidden;
+            left:0;
+            right:0;
+            color:#000;
+            flex-direction: column;
+            padding:9px;
+           background-color: rgba(255, 255, 255, 0.9);
+           gap:5px;
+            
+        }
+        .dash{
+            animation: 1s slide ;
+        }
+        @keyframes slide {
+            0%{
+                width:0%;
+                height:0%;
+            }
+        }
+        input:checked ~ .menuList{
+            display: flex;
+            
+           
+        }
+        .menuList > label {
+            padding:10px;
+            border-bottom:1px solid #000;
+            color: #000;
+            
+            width:270px;
+        }
+        input[type="checkbox"] {
+            display: none;
+               }
+               
+               .menuList > .h1{
+                  width:200px;
+                  margin-left:20%;
+                  text-align: center;
+               }
+            .menuList >   .close {
+                   position: absolute;
+                   top:10px;
+                   right:20px;
+                   font-size: 40px;
+                   font-weight:400;
+                   border: none;
+                   width: 20px;
+               }
+              .white{
+                   background:#fff;
+                  
+               }
+               
+               .form{
+                   display:flex;
+                   flex-direction: column;
+                   justify-content: center;
+                   margin-top:-20px;
+                   gap:6px;
+                   background: #f4f4f4;
+                   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+                   position: relative;
+                   overflow: hidden;
+                   left:6%;
+                   padding:10px;
+                   width: 80%;
+                   border: 1px solid #3C8CE7 ;
+                   border-radius: 7px;
+               }
+               .form:before{
+                   position: absolute;
+                   content:'';
+                   width: 200px;
+                   height: 200px;
+                   background:#3C8CE7;
+                   right:-70px;
+                   top: -70px;
+                   border-radius: 100%;
+                   filter:blur(8px);
+                   opacity: 0.4;
+                   
+               }
+               
+                 .form:after{
+                   position: absolute;
+                   content:'';
+                   width: 200px;
+                   height: 200px;
+                   background:#3C8CE7;
+                   left:-50px;
+                   bottom: -50px;
+                   border-radius: 100%;
+                   filter:blur(8px);
+                   opacity: 0.4;
+               }
+               .form > label{
+                display:flex;
+                   flex-direction: column;
+                   gap:6px;
+                   padding:6px;
+                   z-index:1;
+                   
+               }
+               .form > label > input{
+                   padding: 10px;
+                   border: none;
+                   background : #fff;
+                   width: 90%;
+                   border-radius: 10px;
+               }
+               .bt{
+                   border: none;
+                  padding: 10px;
+                  background: #3C8CE7;
+                 color:#fff;
+                 border-radius: 10px;
+                 opacity: 0.2
+                 1;
+               }
+               .bt:last-child{
+                   background:#3C8CE7;
+                  text-align: center;
+               }
+               .form > span{
+                   display:flex;
+                   padding:8px;
+                   font-size: 15px;
+               }
+               .form > span > label > a{
+             color:#3C8CE7;
+             }
+             input{
+               outline: none;
+             }
+                    .h1 > span{
+           font-size: 51px;  
+           color: red;
+         }
+         .h1{
+             position: relative;
+             
+          top:-20px;
+         }
+         .h1:before{
+             content:'Explore kazi musics | sotho hop';
+             position: absolute;
+             bottom:0;
+             left:0;
+             font-size:8px;
+             width:200px;
+             font-weight: 300;
+         }
+         a{
+             text-decoration: none;
+             color:#000;
+         }
+          .d{
+        
+            color:#3C8CE7;
+            font-size:25px;
+        }
+        
+           .form > label > .eye > input{
+                   padding: 10px;
+                   border: none;
+                   background : #fff;
+                   width: 90%;
+                   border-radius: 10px;
+               }
+               .eye{
+                   display: flex;
+                   gap:5px;
+               }
+               #bnt{
+                   padding: 10px;
+                   border: none;
+                   background : #fff;
+                  
+                   border-radius: 10px;
+               }
+               .alert{
+                   position: fixed;
+                   top:30%;
+                   left:15%;
+                   width: 250px;
+                   background: #fff;
+                   z-index: 10000000;
+                    box-shadow:10px  40px 800px  400px rgba(255, 255, 255, 3);
+                    gap:10px;
+                    height: 150px;
+                    display: none;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content:center;
+                    
+               }
+               
+               .msg_sign{
+                   display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    gap:3px;
+               }
+               .spinner{
+                   width: 50px;
+                   height:50px;
+                   border: 4px solid #000;
+                   border-left: 4px solid #fff;border-right: 4px solid #fff;
+                   
+                   
+                   border-radius: 100%;
+                   animation:spinner 0.5s infinite;
+               }
+               @keyframes spinner{
+                   0%{
+                       transform: rotate(400deg);
+                   }
+               }
+               .msg_sign > span{
+                   font-size: 10px;
+               }
+               
+               
+
+.alert-wrapper {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: none;
+  z-index: 1000000;
+}
+
+.alert-box {
+  width: 250px;
+  padding: 20px;
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+  border-radius: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  position: relative;
+}
+
+.close-btn {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  cursor: pointer;
+  font-size: 20px;
+  color: #721c24;
+}
+
+.close-btn:hover {
+  color: #520c13;
+}
+
+.alert-message {
+  color: #721c24;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+.ok-btn {
+  padding: 8px 16px;
+  border: none;
+  background-color: #dc3545;
+  color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.ok-btn:hover {
+  background-color: #c82333;
+}   </style>
+</head>
+<body>
+    
+    <div class="menu">
+           <input type="checkbox" name='menu' id="sign" checked>
+           <div class="menuList white">
+               <label class="close" for="acc"><a href="home.html">&times;</a></label>
+                 <h1 class="h1">KAZI<span>.</span></h1>
+                 <div class="alert" id="alert">
+                     <div class="spinner">
+                         
+                     </div>
+                     <div class="msg_sign">
+                         <b id="m">Creating Your account...</b>
+                         <span>Please wait while we create account for you</span>
+                     </div>
+                 </div>
+               <div class="form">
+                    <b class='d'>Signup</b>
+               <label >
+                      Username
+                       <input type="text"id="username" placeholder="Your Nickname/Real name"/>
+                       
+                   </label>
+                   
+                   <label >
+                       Phone Number
+                       <input type="text" id="phone"placeholder="Phone Number"/>
+                       
+                   </label>
+                   
+                   
+                    <label >
+                      Password
+                      <div class="eye">
+                       <input type="password" id="pass" placeholder="Password"/>
+                       <button id="bnt" onclick="Showpass()">Show</button>
+                       </div>
+                   </label>
+                   <input type="submit" value="Login" class="bt" onclick="addUser()"/>
+                <span> Already have an Account?<label for='sign'><a href="signin.html">Login</a></label></span>
+               </div>
+           </div>
+       </div>
+       </label>
+     
+    <div id="alertWrapper" class="alert-wrapper">
+    <div id="alertBox" class="alert-box">
+      <span class="close-btn" onclick="closeAlert()">&times;</span>
+      <p class="alert-message" id="error">Error: All inputs are required</p>
+      <button class="ok-btn" onclick="closeAlert()">OK</button>
+    </div>
+  </div>
+
+       
+       
+</body>
+</html>

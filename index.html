@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Kazi app | home</title>
+     <meta name="theme-color" content="#3C8CE7">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     
+   <!-- Firebase configuration script -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+      <script src="showpass.js" defer></script>
+      
+      <style>
+          .nav{
+              display: flex;
+              width: 100%;
+              margin-top: -20px;
+          }
+          body{
+      background:#3C8CE7;
+
+color:#fff;
+background-size: cover;
+background-repeat: no-repeat;
+height:100vh;
+overflow: hidden;
+
+          }
+              
+          
+          .bars{
+              display: flex;
+              flex-direction: column;
+              gap:3px;
+              gap:2px;
+              float: right;
+              position: absolute;
+              right:35px;
+              top:20px;
+          }
+          .bars > div{
+              width: 30px;
+              height: 4px;
+              background:#fff;
+              border-radius:5px;
+          }
+          .bars > .flex{
+              display: flex;
+              gap:3px;
+              background: none;
+          }
+          .bars > .flex > div{
+               width: 30px;
+              height: 4px;
+              background:#fff;
+              border-radius:5px;
+          }
+            .bars > .flex > div:first-child
+            {
+            width: 10px;
+            border-radius: 100%;
+                
+            }
+            .home{
+            background-color: #f4f4f4;
+            position: absolute;
+                display: flex;
+                left:0;
+                width:100%;
+                height:100vh;
+                overflow: hidden;
+                
+            }
+            .left{
+                width: 100px;
+                display: flex;
+                flex-direction: column; padding-top:50px;
+                gap:80px;
+                
+                margin-left: 40px;
+            }
+            .left > label{
+  margin-left:-50px;   
+   transform:rotate(90deg);
+   color:#fff;
+   padding:10px;
+   background:#3C8CE7;
+   width:60px;
+   text-align: center;
+   border-radius: 10px;
+   font-size:9px;
+   
+            }
+            .left > label:hover{
+                background:#fff;
+                color:#3C8CE7;
+                box-shadow:1px  0 10px 10px rgba(0,0,0,0.1);
+            }
+            
+            .right{
+                padding-top:10px;
+                margin-left: -20px;
+                width:600px;
+                height:80vh;
+                overflow: scroll;
+                
+            }
+            .right > .row > .card{
+                width: 200px;
+                height:150px;
+                border-radius: 30px;
+                background:#fff;
+                box-shadow:1px  0 10px 10px rgba(0,0,0,0.1);
+                object-fit: cover;
+                
+            }
+            .h1{
+                font-size:25px;
+            }
+         .h1 > span{
+           font-size: 51px;  
+           color: red;
+         }
+         .h1{
+             position: relative;
+             
+          top:-20px;
+         }
+         .h1:before{
+             content:'Explore kazi musics | sotho hop';
+             position: absolute;
+             bottom:0;
+             left:0;
+             font-size:8px;
+             width:200px;
+             font-weight: 300;
+         }
+         .list > .play{
+             width: 210px;
+             height:auto;
+             background:#fff;
+             border-radius: 10px;
+             padding:5px;
+             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+             display: flex;
+             color:#000;
+             gap:4px;
+         }
+         .list{
+             display: flex;
+             flex-direction: column;
+             gap:10px;
+             padding-top:10px;
+             padding-bottom: 100px;
+         }
+         .list > .play  > .cover{
+             width: 50px;
+             height:57px;
+             background:#999;
+             
+             border-radius: 9px;
+             overflow: hidden
+         }
+          .list > .play  > .cover > img{
+              width:50px;
+              height:57px;
+              object-fit:cover;
+          }
+         .search{
+             margin-top:-40px;
+             padding:10px;
+             padding-bottom:20px;
+         }
+         .search > input{
+             border: none;
+             padding:10px;
+             width:90%;
+             border-radius: 10px;
+         }
+        .dt{
+            display: flex;
+            flex-direction:column;
+            font-size:10px;
+            padding:6px;
+        }
+        .d{
+        
+            color:#3C8CE7;
+            font-size:25px;
+        }
+        input[type="radio"] {
+            display: none;
+        }
+        .content {
+        display: none;
+        }
+        input:checked ~ .content{
+            display: block;
+        }
+        .down {
+            border: 1px dotted #3C8CE7;
+        }
+         .fav{
+            border: 1px dotted red;
+        }
+        .menuList{
+            position: fixed;
+            z-index:1;
+            width:100%;
+            height:100%;
+            display: none;
+            overflow: hidden;
+            left:0;
+            right:0;
+            color:#000;
+            flex-direction: column;
+            padding:9px;
+           background-color: rgba(255, 255, 255, 0.9);
+           gap:5px;
+            
+        }
+        .dash{
+            animation: 1s slide ;
+        }
+        @keyframes slide {
+            0%{
+                width:0%;
+                height:0%;
+            }
+        }
+        input:checked ~ .menuList{
+            display: flex;
+            
+           
+        }
+        .menuList > label {
+            padding:10px;
+            border-bottom:1px solid #000;
+            color: #000;
+            
+            width:270px;
+        }
+        input[type="checkbox"] {
+            display: none;
+               }
+               
+               .menuList > .h1{
+                  width:200px;
+                  margin-left:20%;
+                  text-align: center;
+               }
+  .close {
+                   position: absolute;
+                   top:10px;
+                   right:20px;
+                   font-size: 40px;
+                   font-weight:400;
+                   border: none;
+                   width: 20px;
+               }
+              .white{
+                   background:#fff;
+                  
+               }
+               
+               .form{
+                   display:flex;
+                   flex-direction: column;
+                   gap:6px;
+                   
+                   position: relative;
+                  
+                   overflow: hidden;
+                  
+                   padding:10px;
+                   width: 80%;
+                   
+                   border-radius: 7px;
+              }
+               .form > label{
+                display:flex;
+                   flex-direction: column;
+                   gap:6px;
+                   padding:6px;
+                   z-index:1;
+                   
+               }
+               .form > label > input{
+                   padding: 10px;
+                   border: none;
+                   background : #f2f2f2;
+                   width: 99%;
+                   border-radius: 10px;
+               }
+               .bt{
+                   border: none;
+                  padding: 10px;
+                  background: #3C8CE7;
+                 color:#fff;
+                 border-radius: 10px;
+                 opacity: 0.2
+                 1;
+               }
+               .bt:last-child{
+                   background:#3C8CE7;
+                  text-align: center;
+               }
+               .form > span{
+                   display:flex;
+                   padding:8px;
+                   font-size: 15px;
+               }
+               .form > span > label {
+             color:#3C8CE7;
+             }
+             input{
+               outline: none;
+             }
+             a{
+             text-decoration: none;
+             color:#000;
+         }
+         .profile {
+         display: flex;
+         gap:10px;
+         flex-direction: column;
+         }
+         .profile > .p{
+             display flex;
+             gap:10px;
+         }
+         .profile > label{
+              display flex;
+              flex-direction: column;
+             gap:10px;
+         }
+         .profile > label > .p > input{
+             padding: 10px;
+             background:#f2f2f2;
+             border: none;
+             border-radius: 10px;
+         }
+         
+         .profile > label > span{
+             font-size: 10px;
+         }
+         #bnt{
+              padding: 10px;
+             background:#f2f2f2;
+             border: none;
+             border-radius: 10px;
+         }
+         li{
+         width:300px;
+             font-size: 13px;
+         }
+         .musicInfo{
+              position: fixed;
+            z-index:1;
+            width:100%;
+            height:100%;
+            display: none;
+            overflow: hidden;
+            left:0;
+            right:0;
+            
+            top:0;
+            color:#000;
+            flex-direction: column;
+            padding:9px;
+          
+ animation: gradientAnimation 0.5s  infinite; 
+        background-size: 400% 400%; /* Adjust as needed */
+  animation: gradientAnimation 10s ease infinite; 
+  color:#fff;
+           gap:5px;
+      
+         }
+         
+         @keyframes gradientAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+         input:checked ~ .musicInfo{
+             display: flex;
+             align-items: center;
+             
+             
+         }
+         .musicInfo > img{
+             border-radius:100%;
+             border: 10px solid #fff;
+             width: 150px;
+             height: 150px;
+             object-fit: cover;
+             padding:10px;
+         }
+         .musicInfo > span{
+             margin-top: -20px;
+         }
+         .control {
+             display: flex;
+            gap:3px;
+           padding-top:5px; 
+           float: right;
+          
+         }
+        
+         .control > label{
+             padding:3px;
+             background:#3C8CE7;
+             float: right;
+             color:#fff;
+             border-radius: 3px;
+         }
+         .rg{
+             display: flex;
+             gap:3px;
+         }
+         .btt  > button{
+            background:#fff;
+            border-radius: 10px;
+            border: none;
+            padding:10px;
+         }
+         .fff{
+            display:flex;
+            width:100%;
+            
+            gap:3px;
+         }
+         .fff > label > input{
+             width: 109px;
+             
+             padding: 10px;
+                   border: none;
+                   background : #f2f2f2;
+                   
+                   border-radius: 10px;
+         }
+         .fff > label{
+             font-size: 11px;
+         }
+       .form > label {
+       font-size: 11px;
+       }
+       .form > input{
+           padding: 10px;
+                   border: none;
+                   background:#3C8CE7;
+                   color:#fff;
+                   width: 100%;
+                   border-radius: 10px;
+       }
+      
+          </style>
+</head>
+<body>
+    <div class="nav">
+        <h1 class="h1">Kazi<span>.</span></h1>
+        <label for="open">
+       <div class="bars">
+          
+           <div></div>
+            <div class="flex">
+              <div></div>
+           <div></div>
+           </div>
+           </label>
+       </div>
+       <!-- Settings Menu -->
+       <div class="menu">
+           <input type="checkbox" name='menu' id="open">
+           <div class="menuList dash">
+               <label class="close" for="open">&times;</label>
+                 <h1 class="h1">KAZI<span>.</span></h1>
+                  <b class='d'>Settings </b>
+               <label for="profile">My profile</label>
+               
+               <label for="upload"> Upload </label>
+                
+              
+                
+               <label for="about"> About Kazi app </label>
+           </div>
+       </div>
+       </label>
+       
+       <!-- User Profile -->
+        <div class="menu">
+           <input type="checkbox" name='menu' id="profile">
+           <div class="menuList ">
+               <label class="close" for="profile">&times;</label>
+                 <h1 class="h1">KAZI<span>.</span></h1>
+                  <b class='d' id="user"></b>
+             
+               
+             <div class="profile">
+                <label for="">
+                 <span> Phone Number</span><br><div class="p">
+                        <input type="text" placeholder="Phone Number" value="+266573736" id="phone"disabled/>
+                       
+                   </div>
+                   
+                </label>
+                <label for="">
+                <span>  Password</span><br><div class="p">
+                        <input type="password" id="pass" placeholder="Password" value="+=°€=€™`=|`" disabled/>
+                       <button id="bnt" onclick="Showpass()">Show</button>
+                   </div>
+                   
+                </label>
+                
+                    <input type="submit" value="logout"  onclick="logout()"class="bt" style='width:100px;'/>
+            
+             </div>
+           </div>
+       </div>
+       </label>
+       <!-- About Kazi App -->
+         <div class="menu">
+           <input type="checkbox" name='menu' id="about">
+           <div class="menuList ">
+               <label class="close" for="about">&times;</label>
+                 <h1 class="h1">KAZI<span>.</span></h1>
+                  <b class='d'>About Us</b>
+             
+           <li> Music is a platform created by Poloko Pule. Our goal is to provide an avenue for aspiring musicians and artists to share their talents and music with the world. We believe in supporting emerging artists, fostering creativity, and enabling connections between musicians and their audience.</li>
+           <i>©BD-School- Poloko Pule Creations 2023</li>
+           </div>
+       </div>
+       </label>
+       <!-- Upload Your Music -->
+      
+       <div class="menu">
+           <input type="checkbox" name='menu' id="upload">
+           <div class="menuList them">
+               <label class="close" for="upload">&times;</label>
+                 <h1 class="h1">KAZI<span>.</span></h1>
+           
+                  
+                 
+           <form id="uploadMusicForm" class="form">
+               
+      <div class="fff">
+          <label>
+            Music title
+            <input type="text" id="MusicTitle" placeholder="Music title" />
+        </label>
+        <label>
+            Featuring(include "ft")
+            <input type="text" placeholder="Singers/rappers" id="owners" />
+        </label>
+      </div> 
+        <label>
+            Your song (audio/mp3)
+            <input type="file" id="MusicFile" accept="audio" />
+        </label>
+        <label>
+            Cover photo (png/jpg)*
+            <input type="file" id="MusicCover" accept="image/png, image/jpg" />
+        </label>
+        <input type="submit" value="Upload" />
+    </form>      
+                 
+                     
+           </div>
+       </div>
+       </label>
+       
+      
+       
+        
+       
+    </div>
+    <!-- Search for Kazi Music -->
+    <div class="search">
+        <input type="text" id="searchInput" placeholder="Search kazi music..."/>
+    </div>
+    <div class="home">
+        <div class="left">
+            <label for="home">Home</label>
+         
+             <label for="upload">Upload</label>
+         
+         <label for="profile">My Profile</label>
+         
+                
+        </div>
+         <div class="right">
+           
+             <div class="tab">
+                 <input type='radio' name="tab" id="home" checked/>
+                 <div class="content">
+                     
+                
+           <b class='d' id="DisC">Discover</b>
+           <!-- List of Musics on Kazi app -->
+       <div class="list" id="uploadedFilesList">
+      <!-- Music list -->
+       
+   
+         </div>
+         
+   
+          </div>
+             </div>
+             
+               <div class="tab">
+                 <input type='radio' name="tab" id="downloads" />
+                 <div class="content">
+                     
+                      <b class='d'> Downloads</b>
+       <div class="list">
+      
+      
+       </div>
+           
+                     
+                     
+                 </div>
+                     
+                      <div class="tab">
+                 <input type='radio' name="tab" id="fav" />
+                 <div class="content">
+                     
+                      <b class='d'>favourite</b>
+       <div class="list">
+               
+       <div class="play fav">
+               <div class="cover"></div>
+               <div class="dt">
+                   <b>Thanda wena</b>
+         <span>MKAY ft Black fire</span>
+               </div>
+               
+       </div>
+       </div>
+           
+                     
+                     
+                 </div>
+                     
+                 </div>
+    </div>
+    <script src='hscript.js'></script>
+    
+    
+    <script>
+       const handleSearch = () => {
+            const searchText = document.getElementById('searchInput').value.trim().toLowerCase();
+            const cards = document.querySelectorAll('.play');
+            let hasResults = false;
+
+            cards.forEach(function(card) {
+                const cardTitle = card.querySelector('b').innerText.trim().toLowerCase();
+                const cardDis = card.querySelector('span').innerText.trim().toLowerCase();
+                if (cardTitle.includes(searchText) ||cardDis.includes(searchText) ) {
+                    card.style.display = 'flex';
+                    hasResults = true;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            const noResultsMessage = document.getElementById('DisC');
+            if (!hasResults) {
+                noResultsMessage.innerHTML="No Results Found";
+            } else {
+                noResultsMessage.innerHTML="Discover";
+            }
+        };
+
+        document.getElementById('searchInput').addEventListener('input', handleSearch);
+    </script>
+      <script>
+        
+          const firebaseConfig = {
+  apiKey: "AIzaSyDB_vVn7InTL3i4X3v9L28oyO6235mD7Po",
+  authDomain: "kazi-dc0fd.firebaseapp.com",
+  databaseURL: "https://kazi-dc0fd-default-rtdb.firebaseio.com",
+  projectId: "kazi-dc0fd",
+  storageBucket: "kazi-dc0fd.appspot.com",
+  messagingSenderId: "139734513340",
+  appId: "1:139734513340:web:069fbb3fd9133c687582b9"
+};
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        // Handle form submission
+        document.getElementById('uploadMusicForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            const owners = document.getElementById('owners').value;
+            const MusicTitle = document.getElementById('MusicTitle').value;
+            const MusicCover = document.getElementById('MusicCover').files[0];
+            const MusicFile = document.getElementById('MusicFile').files[0];
+
+            const storageRef = firebase.storage().ref();
+            const MusicCoverRef = storageRef.child('covers/' + MusicCover.name);
+            const MusicFileRef = storageRef.child('music/' + MusicFile.name);
+
+            // Upload files to Firebase Storage
+            const uploadCoverTask = MusicCoverRef.put(MusicCover);
+            const uploadFileTask = MusicFileRef.put(MusicFile);
+
+            Promise.all([uploadCoverTask, uploadFileTask]).then(function() {
+                console.log('Both files uploaded successfully');
+
+                // Get download URLs of uploaded files
+                const coverURL = MusicCoverRef.getDownloadURL();
+                const fileURL = MusicFileRef.getDownloadURL();
+
+                return Promise.all([coverURL, fileURL]);
+            }).then(function(urls) {
+                const [coverURL, fileURL] = urls;
+
+                // Get a reference to the Firebase Realtime Database
+                const database = firebase.database();
+                // Generate a unique key for the user
+                const userID = database.ref().child('users').push().key;
+
+                // Prepare data to be inserted into the Realtime Database
+                const userData = {
+                    username: owners,
+                    musicTitle: MusicTitle,
+                    coverURL: coverURL,
+                    fileURL: fileURL
+                };
+
+                // Insert username and music details into the Realtime Database under 'users' node
+                const updates = {};
+                updates['/users/' + userID] = userData;
+
+                return database.ref().update(updates);
+            }).then(function() {
+                console.log('Data inserted into the Realtime Database successfully');
+                alert('Music uploaded successfully!');
+                // Clear form fields after successful upload
+                document.getElementById('MusicTitle').value = '';
+                document.getElementById('owners').value = '';
+                document.getElementById('MusicCover').value = '';
+                document.getElementById('MusicFile').value = '';
+            }).catch(function(error) {
+                console.error('Error uploading files or inserting data:', error);
+                alert('Error uploading files or inserting data: ' + error.message);
+            });
+        }); 
+        
+        
+        
+        
+          // Reference to the Firebase Realtime Database
+        const database = firebase.database();
+
+        // Reference to the 'users' node in the Realtime Database
+        const usersRef = database.ref('users');
+
+        // Fetch uploaded files and their data from the Realtime Database
+        usersRef.on('value', function(snapshot) {
+            const uploadedFilesList = document.getElementById('uploadedFilesList');
+            uploadedFilesList.innerHTML = ''; // Clear the list
+
+            snapshot.forEach(function(childSnapshot) {
+                const userData = childSnapshot.val();
+                
+                var open = userData.musicTitle +"/"+userData.username +"_"+userData.coverURL;
+                
+                
+               
+  const randomColor1 = getRandomColor();
+  const randomColor2 = getRandomColor();
+
+  const gradient = `linear-gradient(135deg, ${randomColor1}, ${randomColor2})`;
+  
+
+
+function getRandomColor() {
+  const randomColor = `rgb(${getRandomRGB()}, ${getRandomRGB()}, ${getRandomRGB()})`;
+  return randomColor;
+}
+
+function getRandomRGB() {
+  return Math.floor(Math.random() * 256)  
+}  
+var FName = userData.musicTitle +' | '+ userData.username +'_KaziMusic';
+                const fileDetails = `
+                            
+       <div class="play">
+               <div class="cover"><img src=" ${userData.coverURL}" width="100"></div>
+               <div class="dt">
+                   <b>${userData.musicTitle}</b>
+         <span>${userData.username}</span>
+       <div class="control">
+        <label for="${open}">Play</label>
+          <label for=""><a href='${userData.fileURL}' download="${FName}.mp3">Download</a></label>
+       </div>
+      
+               </div>
+               
+       </div> 
+       
+       <div class="MusicBox">
+           <input type="checkbox" name="MusicBox" id="${open}"/>
+           <div class="musicInfo" style="background: ${gradient};">
+             <label class="close" for="${open}">&times;</label>
+              
+             <img src=" ${userData.coverURL}" width="150">
+             <h2>${userData.musicTitle}</h2>
+             <span>${userData.username}</span>
+            <audio src='${userData.fileURL}' id="song_${open}" hidden></audio>
+                             
+                <div class="rg" >
+            <span id="timeleft_${open}">0:00</span>          <input type="range" id="seekbar_${open}" value="0" min="0" step="1" />
+                    <span id="duration_${open}">0:00</span>
+                    </div>
+                    
+            <div class="btt">
+       <button onclick="Play('${open}')">Play</button>
+           <button onclick="Pause('${open}')">Pause</button>          
+                
+            </div>
+                  
+          
+               
+           </div>
+       </div>
+                `;
+                
+                       uploadedFilesList.innerHTML += fileDetails;
+
+        const audio = document.getElementById(`song_${open}`);
+        const seekbar = document.getElementById(`seekbar_${open}`);
+        const durationSpan = document.getElementById(`duration_${open}`);
+
+       
+        const timeLeftSpan = document.getElementById(`timeleft_${open}`); audio.addEventListener('loadedmetadata', function() {
+            const duration = audio.duration;
+            const minutes = Math.floor(duration / 60);
+            const seconds = Math.floor(duration % 60);
+            durationSpan.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+            seekbar.max = duration;
+        });
+
+        audio.addEventListener('timeupdate', function() {
+            seekbar.value = audio.currentTime;
+            const remainingTime = audio.duration - audio.currentTime;
+            const remainingMinutes = Math.floor(remainingTime / 60);
+            const remainingSeconds = Math.floor(remainingTime % 60);
+            timeLeftSpan.textContent = `-${remainingMinutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
+        });
+
+        seekbar.addEventListener('change', function() {
+            audio.currentTime = seekbar.value;
+        });
+    });
+}, function(error) {
+    console.error('Error fetching uploaded files:', error);
+    alert('Error fetching uploaded files: ' + error.message);
+});
+
+function Play(open) {
+    const audio = document.getElementById(`song_${open}`);
+    audio.play();
+}
+    function Pause(open) {
+    const audio = document.getElementById(`song_${open}`);
+    audio.pause();
+}
+    
+      </script>
+        </script>
+       
+</body>
+</html>
